@@ -559,7 +559,7 @@ class detailNews extends StatelessWidget {
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(50),
                   bottomLeft: Radius.circular(50)),
-              child: Image.asset(img),
+              child: Image.asset(img,fit: BoxFit.fill,),
             ),
           ),
           Container(

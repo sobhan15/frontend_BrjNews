@@ -1,16 +1,25 @@
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 import 'newsRoute.dart' as newsRoute;
 import 'AgahiRoute.dart' as agahiRoute;
 import 'nomineRoute.dart' as nomineRote;
 import 'SignInUpRout.dart' as sign;
+import 'package:http/http.dart' as http;
 import 'package:carousel_pro/carousel_pro.dart';
 import 'FunRoute.dart' as funRoute;
 void main() => runApp(MyApp());
 
 
 class MyApp extends StatelessWidget {
+
+
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -35,7 +44,15 @@ Widget testBgCarousel(){
 
 }
 
-class MainRoute extends StatelessWidget {
+class MainRoute extends StatefulWidget{
+  @override
+  MainRouteState createState()=>MainRouteState();
+}
+
+class MainRouteState extends State<MainRoute>{
+
+
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -190,27 +207,32 @@ class MainRoute extends StatelessWidget {
                           color: Colors.redAccent),
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width*0.40,
-                    height: 50,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Text(
-                          "دوربین مخفی \n مصاحبه",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        Icon(
-                          Icons.camera,
-                          size: 22,
-                          color: Colors.white,
-                        )
-                      ],
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => testRoute()));
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width*0.40,
+                      height: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Text(
+                            "دوربین مخفی \n مصاحبه",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Icon(
+                            Icons.camera,
+                            size: 22,
+                            color: Colors.white,
+                          )
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Colors.deepOrangeAccent),
                     ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Colors.deepOrangeAccent),
-                  ),
+                  )
                 ],
               ),
             ],
@@ -222,7 +244,7 @@ class MainRoute extends StatelessWidget {
             child: Container(
 
               width: MediaQuery.of(context).size.width*1,
-              height: MediaQuery.of(context).size.height*0.15,
+              height: MediaQuery.of(context).size.height*0.12,
               margin: EdgeInsets.all(5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -240,3 +262,84 @@ class MainRoute extends StatelessWidget {
     );
   }
 }
+
+class testRoute extends StatefulWidget{
+  @override
+  testRouteState createState()=>testRouteState();
+}
+
+class testRouteState extends State<testRoute>{
+  File _file;
+
+  Future _choose() async {
+    var file=await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _file=file;
+    });
+
+    print("$_file :=============================================");
+  }
+
+  void _upload(){
+    var url="http://192.168.43.15:8000/getImage";
+    if(_file==null) return;
+    String base64Image=base64Encode(_file.readAsBytesSync());
+    String fileName=_file.path.split("/").last;
+    print(base64Image);
+    http.post(url,
+        body: {"image":base64Image,
+                "name":fileName}).then((res){
+                  print(res.statusCode);
+                  print(res.body);
+    }).catchError((err){
+      print(err);
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+        body: Column(
+          children: <Widget>[
+            Center(
+              child: _file==null?null: Image.file(_file),
+            ),
+           Row(
+             children: <Widget>[
+               FlatButton(
+                 onPressed: (){
+                   _choose();
+                 },
+                 child: Text("choose photo"),
+               ),
+               FlatButton(
+                 onPressed: (){
+                   _upload();
+                 },
+                 child: Text("upload photo"),
+               )
+             ],
+           )
+          ],
+        )
+    );
+  }
+
+}
+
+Future<http.Response> postrequest() async{
+  var url="http://192.168.43.15:8000/insertUser";
+  Map data={
+    'name':'sobhan',
+    'family':'moradi',
+    'age':"21"
+  };
+  var body=json.encode(data);
+  var response=await http.post(url,
+      headers: {"Content-Type":"application/json"},
+      body: body);
+  print("${response.statusCode}");
+  print("${response.body}");
+  return response;
+}
+

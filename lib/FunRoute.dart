@@ -180,7 +180,8 @@ class StateItemImage extends State<ItemImage>{
               height: MediaQuery.of(context).size.height*0.2,
 
             ),
-            Text(list[position].text,),
+            Text(list[position].text,textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 18),),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -193,7 +194,8 @@ class StateItemImage extends State<ItemImage>{
           children: <Widget>[
             Container(
               alignment: Alignment.topRight,
-              child:  Text(list[position].text,textAlign: TextAlign.right,),
+              child:  Text(list[position].text,textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20),),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -245,15 +247,15 @@ Future<List<modalItem>> getDataFun() async{
 
   var data=[{
     "id":"1",
-    "image":"images/morgan.jpg",
-    "text":"hello im morgan",
+    "image":"images/minion.jpg",
+    "text":"",
     "time":"10:00",
   },
     {
       "id":"1",
       "image":"",
-      "text":"hello im morgan",
-      "time":"20:0",
+      "text":"دیشب برق رفت بابام گفت پاشو یه شمع روشن کن \n گفتم نمیخواد وجودت خودش نوره \n . \n . \n . \n یهو دیدم یه دمپایی پرت کرد طرفم گفت لایک خوشم اومد",
+      "time":"20:00",
     },
     {
       "id":"1",

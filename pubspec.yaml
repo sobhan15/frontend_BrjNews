@@ -77,6 +77,17 @@ flutter:
     - images/i2.jpg
     - images/i3.jpg
     - images/i4.jpg
+    - images/abbas.jpg
+    - images/ala.jpg
+    - images/eslash.jpg
+    - images/kafsh.jpg
+    - images/pride.jpg
+    - images/pals.jpg
+    - images/g1.jpg
+    - images/g2.jpg
+    - images/d1.jpg
+    - images/d2.jpg
+    - images/minion.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

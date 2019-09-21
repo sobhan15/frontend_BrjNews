@@ -349,23 +349,13 @@ Future<List<modalItemDead>> getDataItemDead() async{
   var data=[
     {
     "id":"id",
-    "image":"images/sergio.jpg",
-    "name":"sergio"
+    "image":"images/d1.jpg",
+    "name":"مرحوم"
   },
     {
       "id":"id",
-      "image":"images/morgan.jpg",
-      "name":"morgan"
-    },
-    {
-      "id":"id",
-      "image":"images/sergio.jpg",
-      "name":"sergio"
-    },
-    {
-      "id":"id",
-      "image":"images/morgan.jpg",
-      "name":"morgan"
+      "image":"images/d2.jpg",
+      "name":"مرحومه"
     },
 
   ];

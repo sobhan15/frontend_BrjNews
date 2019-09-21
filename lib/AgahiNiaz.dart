@@ -1,14 +1,11 @@
-
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'SignInUpRout.dart'  as sign;
+import 'SignInUpRout.dart' as sign;
 import 'globals.dart' as globals;
 import 'package:image_picker/image_picker.dart';
-
 
 class modelItemNiaz {
   final String id;
@@ -32,12 +29,10 @@ class modelItemNiaz {
   }
 }
 
-
-
 class addAgahiNiaz extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
+// TODO: implement createState
     return addAgahiNiazState();
   }
 }
@@ -56,168 +51,177 @@ class addAgahiNiazState extends State<addAgahiNiaz> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-        body: Builder(builder: (context){
-          return Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.8,
-              child: ListView(
-                padding: EdgeInsets.all(2),
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () async {
-                      File imageFile =
+// TODO: implement build
+    return Scaffold(body: Builder(builder: (context) {
+      return Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: MediaQuery.of(context).size.height * 0.8,
+          child: ListView(
+            padding: EdgeInsets.all(2),
+            children: <Widget>[
+              GestureDetector(
+                onTap: () async {
+                  File imageFile =
                       await ImagePicker.pickImage(source: ImageSource.gallery);
+                  setState(() {
+                    image = imageFile;
+                  });
+                },
+                child: Container(
+                  child: image == null
+                      ? Icon(
+                          Icons.add_a_photo,
+                          size: 50,
+                        )
+                      : Image.file(image),
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  decoration: BoxDecoration(
+                      color: Colors.blueGrey,
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                ),
+              ),
+              Container(
+                  margin: EdgeInsets.all(5),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        labelText: "تیتر آگهی", errorText: _errorTitle),
+                    onChanged: (title) {
                       setState(() {
-                        image = imageFile;
+                        _title = title;
                       });
                     },
-                    child: Container(
-                      child: image == null
-                          ? Icon(
-                        Icons.add_a_photo,
-                        size: 50,
-                      )
-                          : Image.file(image),
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      decoration: BoxDecoration(
-                          color: Colors.blueGrey,
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                    ),
-                  ),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: TextField(
-                        decoration: InputDecoration(labelText: "تیتر آگهی",errorText: _errorTitle),
-                        onChanged: (title) {
-                          setState(() {
-                            _title = title;
-                          });
-                        },
-                      )),
-                  Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 5, 5),
-                      child: TextField(
-                        decoration: InputDecoration(labelText: "قیمت",errorText: _errorPrice),
-                        onChanged: (price) {
-                          setState(() {
-                            _price = price;
-                          });
-                        },
-                      )),
-                  Container(
-                      margin: EdgeInsets.fromLTRB(0, 5, 5, 5),
-                      child: TextField(
-                        decoration: InputDecoration(labelText: "تلفن همراه",errorText: _errorPhone),
-                        onChanged: (phone) {
-                          setState(() {
-                            _phone = phone;
-                          });
-                        },
-                      )),
-                  Container(
-                      margin: EdgeInsets.fromLTRB(0,5,0,5),
-                      child: TextField(
-                        maxLines: 5,
-                        decoration: InputDecoration(labelText: "توضیحات محصول",errorText: _errordesc),
-                        onChanged: (desc) {
-                          setState(() {
-                            _desc = desc;
-                          });
-                        },
-                      )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      FlatButton(
-                        onPressed: (){
+                  )),
+              Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 5, 5),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        labelText: "قیمت", errorText: _errorPrice),
+                    onChanged: (price) {
+                      setState(() {
+                        _price = price;
+                      });
+                    },
+                  )),
+              Container(
+                  margin: EdgeInsets.fromLTRB(0, 5, 5, 5),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        labelText: "تلفن همراه", errorText: _errorPhone),
+                    onChanged: (phone) {
+                      setState(() {
+                        _phone = phone;
+                      });
+                    },
+                  )),
+              Container(
+                  margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                  child: TextField(
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                        labelText: "توضیحات محصول", errorText: _errordesc),
+                    onChanged: (desc) {
+                      setState(() {
+                        _desc = desc;
+                      });
+                    },
+                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        _errorTitle = null;
+                        _errorPrice = null;
+                        _errorPhone = null;
+                        _errordesc = null;
+                      });
 
-                          setState(() {
-                            _errorTitle=null;
-                            _errorPrice=null;
-                            _errorPhone=null;
-                            _errordesc=null;
-                          });
-
-
-                          if(image==null){
-                            Scaffold.of(context).showSnackBar(SnackBar(content: Text("برای اجناس خود عکسی انتخاب کنید"),
-                              backgroundColor: Colors.blue,));
-                          }else if(_title==null){
-                            setState(() {
-                              _errorTitle="تیتر نمیتواند خالی بماند";
-                            });
-                          }else if(_price==null){
-                            setState(() {
-                              _errorPrice="قیمت نمی تواند خالی بماند";
-                            });
-                          }else if(_phone==null){
-                            setState(() {
-                              _errorPhone="تلفن همراه برای تماس با شما نیاز است";
-                            });
-                          }else if(_desc==null){
-                            setState(() {
-                              _errordesc="توضیحات محصول نمی تواند خالی بماند";
-                            });
-                          }else{
-
-
-
-                            Scaffold.of(context).showSnackBar(SnackBar(content:
-                            Text("محصول شما پس از تایید تا چند ساعت آینده در این قسمت قرار خواهد گرفت"),duration: Duration(seconds: 7),
-                              backgroundColor: Colors.blue,action: SnackBarAction(label: "برگشت" ,textColor: Colors.white,onPressed: (){
+                      if (image == null) {
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text("برای اجناس خود عکسی انتخاب کنید"),
+                          backgroundColor: Colors.blue,
+                        ));
+                      } else if (_title == null) {
+                        setState(() {
+                          _errorTitle = "تیتر نمیتواند خالی بماند";
+                        });
+                      } else if (_price == null) {
+                        setState(() {
+                          _errorPrice = "قیمت نمی تواند خالی بماند";
+                        });
+                      } else if (_phone == null) {
+                        setState(() {
+                          _errorPhone = "تلفن همراه برای تماس با شما نیاز است";
+                        });
+                      } else if (_desc == null) {
+                        setState(() {
+                          _errordesc = "توضیحات محصول نمی تواند خالی بماند";
+                        });
+                      } else {
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              "محصول شما پس از تایید تا چند ساعت آینده در این قسمت قرار خواهد گرفت"),
+                          duration: Duration(seconds: 7),
+                          backgroundColor: Colors.blue,
+                          action: SnackBarAction(
+                              label: "برگشت",
+                              textColor: Colors.white,
+                              onPressed: () {
                                 Navigator.pop(context);
-                              }),));
-
-
-                          }
-                        },
-                        child: Text("ارسال"),
-                      ),
-                      FlatButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        child: Text("انصراف"),
-                      )
-                    ],
+                              }),
+                        ));
+                      }
+                    },
+                    child: Text("ارسال"),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text("انصراف"),
                   )
                 ],
-              ),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 2),
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-            ),
-          );
-        })
-    );
+              )
+            ],
+          ),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: 2),
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+        ),
+      );
+    }));
   }
 }
 
-
-class NiazRoute extends StatelessWidget{
+class NiazRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+// TODO: implement build
     return Scaffold(
       floatingActionButton: new Builder(builder: (context) {
         return FloatingActionButton(
             child: Icon(Icons.add),
             onPressed: () {
               if (globals.isLoggedIn) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => addAgahiNiaz()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => addAgahiNiaz()));
               } else {
-                Scaffold.of(context).showSnackBar(SnackBar(content: Text("برای قرار دادن آکهی ابتدا باید وارد شوید"),
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text("برای قرار دادن آکهی ابتدا باید وارد شوید"),
                   backgroundColor: Colors.blue,
-                  action: SnackBarAction(label: "ورود",textColor: Colors.white, onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>sign.signIn()));
-                  }),));
+                  action: SnackBarAction(
+                      label: "ورود",
+                      textColor: Colors.white,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => sign.signIn()));
+                      }),
+                ));
               }
             });
       }),
@@ -241,7 +245,6 @@ class NiazRoute extends StatelessWidget{
           }),
     );
   }
-
 }
 
 class detailAgahiNiaz extends StatelessWidget {
@@ -257,7 +260,7 @@ class detailAgahiNiaz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+// TODO: implement build
     return Scaffold(
       body: Center(
         child: Container(
@@ -273,7 +276,7 @@ class detailAgahiNiaz extends StatelessWidget {
                     child: Container(
                       child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
-                        child: Image.asset(image),
+                        child: Image.asset(image,fit: BoxFit.cover,),
                       ),
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: MediaQuery.of(context).size.height * 0.3,
@@ -283,7 +286,8 @@ class detailAgahiNiaz extends StatelessWidget {
                     ),
                   )),
               Container(
-                margin: EdgeInsets.all(5),
+
+                margin: EdgeInsets.fromLTRB(5, 15, 5, 25),
                 child: Text(
                   title,
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -321,7 +325,7 @@ class detailAgahiNiaz extends StatelessWidget {
                     child: Text(
                       "برگشت",
                       style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                   ))
@@ -352,7 +356,7 @@ class StateItemNiaz extends State<ItemNiaz> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+// TODO: implement build
 
     return Container(
         child: ListView.builder(
@@ -367,12 +371,12 @@ class StateItemNiaz extends State<ItemNiaz> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => detailAgahiNiaz(
-                                title: list[position].title,
-                                image: list[position].image,
-                                phone: list[position].number,
-                                price: list[position].price,
-                                desc: list[position].desc,
-                              )));
+                                    title: list[position].title,
+                                    image: list[position].image,
+                                    phone: list[position].number,
+                                    price: list[position].price,
+                                    desc: list[position].desc,
+                                  )));
                     },
                     child: Container(
                       margin: EdgeInsets.all(5),
@@ -394,11 +398,12 @@ class StateItemNiaz extends State<ItemNiaz> {
                                 Text(""),
                                 Text(
                                   list[position].price,
-                                  style: TextStyle(color: Colors.grey),
+                                  style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
                           ),
+                          Expanded(child:
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
@@ -410,7 +415,7 @@ class StateItemNiaz extends State<ItemNiaz> {
                               Text(""),
                               Text(""),
                             ],
-                          ),
+                          ),),
                           Container(
                             child: ClipRRect(
                               child: Image.asset(
@@ -418,7 +423,7 @@ class StateItemNiaz extends State<ItemNiaz> {
                                 fit: BoxFit.cover,
                               ),
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10)),
+                                  BorderRadius.all(Radius.circular(10)),
                             ),
                             margin: EdgeInsets.only(left: 10),
                             width: MediaQuery.of(context).size.width * 0.3,
@@ -426,9 +431,9 @@ class StateItemNiaz extends State<ItemNiaz> {
                             decoration: BoxDecoration(
                                 color: Colors.transparent,
                                 border:
-                                Border.all(width: 2, color: Colors.grey),
+                                    Border.all(width: 2, color: Colors.grey),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                                    BorderRadius.all(Radius.circular(10))),
                           ),
                         ],
                       ),
@@ -439,38 +444,39 @@ class StateItemNiaz extends State<ItemNiaz> {
 }
 
 Future<List<modelItemNiaz>> getDataItemNiaz() async {
+
   var data = [
     {
       "id": "id",
-      "title": "چوغا",
-      "price": "price",
-      "desc": "desc",
+      "title": "کفش اسپرت",
+      "price": "160/000",
+      "desc": "امروزه به دلیل وجود فعالیت های روزمره افراد مجبور هستند ساعات زیادی از کفش استفاده نمایند کفش ها انواع مختلفی دارند که افراد با توجه به سلیقه خود انواع  مختلفی از آن را انتخاب می کنند باید توجه داشته باشیم که پا به عنوان عضو مهمی از بدن به شمار می آید",
       "number": "09123456789",
-      "image": "images/chogha.jpg"
+      "image": "images/kafsh.jpg"
     },
     {
       "id": "id",
-      "title": "مرد",
-      "price": "price",
-      "desc": "desc",
+      "title": "پراید هاچ بک کره ای",
+      "price": "23/000/000",
+      "desc": "داخل موتور و صندوق و لای درا بی رنگ یکسال بیمه با تخفیف کامل موتور تعمیر و کاربرات سرویس شده زیر بندی کامل سرویس شده کمکهای پوسته کوتاه kds ریگلاژی با قابلیت تنظیم ارتفاع روکش صندلی نو." ,
       "number": "09100000000",
-      "image": "images/man.jpg"
+      "image": "images/pride.jpg"
     },
     {
       "id": "id",
       "number": "09123456789",
-      "title": "title3",
-      "price": "price",
-      "desc": "desc",
-      "image": "image"
+      "title": "پالس ای اس خشک",
+      "price": "18/000/000",
+      "desc": "97 روشن شده و قیمت مقطوع",
+      "image": "images/pals.jpg"
     },
     {
       "id": "id",
-      "title": "title4",
+      "title": "ملد جدید شلوار اسلش",
       "number": "09123456789",
-      "price": "price",
-      "desc": "desc",
-      "image": "image"
+      "price": "70/000",
+      "desc": "قیمت هر کدام 70 هزار تومان\n ارسال سراسری پرداخت درب منزل\n هزینه ارسال بین 6 الی 10 هزار تومان",
+      "image": "images/eslash.jpg"
     }
   ];
 

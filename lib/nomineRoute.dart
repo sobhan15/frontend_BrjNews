@@ -120,29 +120,21 @@ Future<List<modelNomine>> dataItemNomine() async {
   var data = [
     {
       "id": "id",
-      "image": "images/morgan.jpg",
-      "name": "مورگان",
-      "desc": "سلام من مورگان هستم",
+      "image": "images/abbas.jpg",
+      "name": "عباس گودرزی",
+      "desc": "عباس گودرزی متولد ۱۳۵۶ بوده و در رشته دبیری فیزیک تحصیل کرده است. گودرزی مدرک کارشناسی ارشد خود را در رشته علوم سیاسی دریافت کرده و سابقه حضور در شورای اسلامی شهر بروجرد را در کارنامه خود دارد. وی کاندیدای مورد حمایت اصولگرایان و محافظه کاران در شهرستان بروجرد است.",
       "like":"71",
       "dislike": "3",
     },
     {
       "id": "id",
-      "image": "images/sergio.jpg",
-      "name": "سرخیو",
-      "desc": "سلام من سرخیو هستم\n"
-          "سلام من سرخیو هستم\n",
+      "image": "images/ala.jpg",
+      "name": "علادین بروجردی",
+      "desc": "علاءالدین بروجردی زاده ۱۳۲۹ درعراق، نجف یکی از دو نماینده شهرستان بروجرد و اشترینان در مجلس ششم، مجلس هفتم، مجلس هشتم، مجلس نهم و مجلس دهم می‌باشد. نامبرده رئیس کمیسیون امنیت ملی و سیاست خارجی مجلس هشتم، مجلس نهم و دو سال اول مجلس دهم بوده‌است. وی پیش از این سابقه معاونت وزارت امورخارجه در دوران علی اکبر ولایتی را داشته‌است. او ورودی ۱۳۴۹ دانشگاه تبریز است و در سال ۱۳۵۴ در رشته علوم‌آزمایشگاهی فارغ‌التحصیل شده و پس از از تحصیل مسئول آزمایشگاه‌های محراب‌خان در شهر مشهد و سپس هلال احمر دوبی مشغول به کار بوده‌است. او پس از انقلاب همچنان در دبی می‌ماند و کمیته انقلاب اسلامی، شعبه دبی را تشکیل می‌دهد. در اوایل شروع جنگ ایران و عراق نیز وی از دبی تجهیزات پزشکی و آمبولانس به ایران ارسال می‌کرده‌است",
       "like": "35",
       "dislike": "2",
     },
-    {
-      "id": "id",
-      "image": "images/chogha.jpg",
-      "name": "چوغا",
-      "desc": "اینجا چوغا هست",
-      "like": "2",
-      "dislike": "1",
-    },
+
 
   ];
 
@@ -215,11 +207,12 @@ class _listViewNomine extends State<NomineDetail> {
                               ),
                             )),
                         Container(
+                          alignment: Alignment.center,
                           width: MediaQuery.of(context).size.width * 0.8,
-                          height: MediaQuery.of(context).size.height * 0.03,
+                          height: MediaQuery.of(context).size.height * 0.05,
                           child: Text(
                             list[index].name,
-                            style: TextStyle(color: Colors.white, fontSize: 17),
+                            style: TextStyle(color: Colors.white, fontSize: 19),
                             textAlign: TextAlign.center,
                           ),
                           decoration: BoxDecoration(color: Colors.black12),
@@ -295,16 +288,35 @@ class StateCardNomine extends State<cardNomine> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Row(
+                 GestureDetector(
+                  child:  Row(
                     children: <Widget>[
-                      Icon(Icons.thumb_up),
+                      Icon(Icons.thumb_up,color: iconLike?Colors.green:null,),
                       Text(
                         like,
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w700),
+                            fontSize: 16, fontWeight: FontWeight.w700,color: iconLike?Colors.green:null,),
                       ),
                     ],
                   ),
+                   onTap: (){
+                    if(iconLike==false){
+                      int intLike=int.parse(like);
+                      intLike++;
+                      setState(() {
+                        like="$intLike";
+                        iconLike=true;
+                      });
+                    }else{
+                      int intLike=int.parse(like);
+                      intLike--;
+                      setState(() {
+                        like="$intLike";
+                        iconLike=false;
+                      });
+                    }
+                   },
+              ),
                   Text(
                     name,
                     style: TextStyle(
@@ -322,6 +334,21 @@ class StateCardNomine extends State<cardNomine> {
                       ],
                     ),
                     onTap: () {
+                      if(iconDislike==false){
+                        int intDislike=int.parse(dislike);
+                        intDislike++;
+                        setState(() {
+                          dislike="$intDislike";
+                          iconDislike=true;
+                        });
+                      }else{
+                        int intDislike=int.parse(dislike);
+                        intDislike--;
+                        setState(() {
+                          dislike="$intDislike";
+                          iconDislike=false;
+                        });
+                      }
 
                     },
                   )
